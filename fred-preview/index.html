@@ -29,11 +29,12 @@
       --r-sm:12px;
     }
     *{box-sizing:border-box}
-    html{background:var(--bg);scroll-behavior:smooth}
+    html{background:var(--bg);scroll-behavior:smooth;overflow-x:hidden}
     body{
       margin:0;
-      min-width:320px;
+      min-width:0;
       min-height:100dvh;
+      overflow-x:hidden;
       background:var(--bg);
       color:var(--text);
       font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
@@ -54,30 +55,45 @@
     }
     #app{min-height:100dvh}
     .shell{
-      width:min(100%,430px);
+      --pad-inline:clamp(14px,4vw,20px);
+      --pad-left:max(var(--pad-inline),env(safe-area-inset-left));
+      --pad-right:max(var(--pad-inline),env(safe-area-inset-right));
+      width:min(100%,34rem);
       min-height:100dvh;
       margin:0 auto;
-      padding:max(18px,env(safe-area-inset-top)) 18px max(28px,env(safe-area-inset-bottom));
+      padding-top:max(clamp(16px,3dvh,22px),env(safe-area-inset-top));
+      padding-right:var(--pad-right);
+      padding-bottom:max(clamp(24px,4dvh,34px),env(safe-area-inset-bottom));
+      padding-left:var(--pad-left);
       display:flex;
       flex-direction:column;
-      gap:18px;
+      gap:clamp(14px,2.5dvh,20px);
       background:var(--surface);
     }
-    .topbar{display:flex;align-items:center;min-height:48px;gap:5px}
-    .brand{display:flex;align-items:center;gap:5px;text-decoration:none;color:var(--text);min-width:0;flex:1}
-    .brand-logo{width:clamp(78px,23vw,88px);height:auto;object-fit:contain;background:transparent;flex:0 0 auto}
-    .brand-copy{line-height:1.08;min-width:136px;flex:0 0 136px}
+    .topbar{display:flex;align-items:center;min-height:48px;gap:clamp(4px,1.5vw,8px);min-width:0}
+    .brand{display:flex;align-items:center;gap:clamp(4px,1.5vw,7px);text-decoration:none;color:var(--text);min-width:0;flex:1}
+    .brand-logo{width:clamp(72px,22vw,90px);height:auto;object-fit:contain;background:transparent;flex:0 0 auto}
+    .brand-copy{line-height:1.08;min-width:0;flex:1}
     .brand-copy span{font-size:14px;color:var(--muted)}
     .brand-line{display:block;white-space:nowrap}
     .step-pill{
-      margin-left:auto;min-height:34px;padding:6px;border-radius:999px;
+      margin-left:auto;min-height:34px;padding:6px 8px;border-radius:999px;
       background:var(--surface-2);color:var(--muted);font-size:14px;font-weight:700;
       display:inline-flex;align-items:center;white-space:nowrap;flex:0 0 auto;
     }
     .progress{height:5px;border-radius:999px;background:#E8EEF6;overflow:hidden}
     .progress>span{display:block;height:100%;background:var(--fred-blue);border-radius:inherit;transition:width .18s ease}
-    .screen{flex:1;display:flex;flex-direction:column;gap:18px;animation:enter .18s ease both}
-    .hero-screen{margin:0 -18px -28px;padding:28px 18px 30px;background:var(--fred-navy);color:#fff}
+    .screen{flex:1;min-width:0;display:flex;flex-direction:column;gap:clamp(14px,2.4dvh,20px);animation:enter .18s ease both}
+    .hero-screen{
+      margin-right:calc(-1 * var(--pad-right));
+      margin-bottom:calc(-1 * max(clamp(24px,4dvh,34px),env(safe-area-inset-bottom)));
+      margin-left:calc(-1 * var(--pad-left));
+      padding-top:clamp(22px,4dvh,32px);
+      padding-right:var(--pad-right);
+      padding-bottom:max(30px,env(safe-area-inset-bottom));
+      padding-left:var(--pad-left);
+      background:var(--fred-navy);color:#fff
+    }
     .hero-brand{display:flex;align-items:center;gap:11px}
     .hero-brand img{width:112px;height:auto;object-fit:contain;background:transparent}
     .hero-kicker,.eyebrow{
@@ -88,10 +104,10 @@
     .hero-screen .eyebrow,.result-card .eyebrow{color:#AFCBFF}
     h1,h2,h3,p{margin-top:0}
     h1,h2,h3{text-wrap:balance}
-    h1{font-size:48px;line-height:.98;letter-spacing:-.055em;margin-bottom:14px}
-    h2{font-size:32px;line-height:1.05;letter-spacing:-.045em;margin-bottom:10px}
-    h3{font-size:20px;line-height:1.18;letter-spacing:-.025em;margin-bottom:6px}
-    .lede{font-size:18px;line-height:1.55;color:var(--muted);margin-bottom:0}
+    h1{font-size:clamp(2.5rem,11vw,3rem);line-height:.98;letter-spacing:-.055em;margin-bottom:14px}
+    h2{font-size:clamp(1.75rem,7vw,2rem);line-height:1.05;letter-spacing:-.045em;margin-bottom:10px}
+    h3{font-size:clamp(1.125rem,4.8vw,1.25rem);line-height:1.18;letter-spacing:-.025em;margin-bottom:6px}
+    .lede{font-size:clamp(1rem,4vw,1.125rem);line-height:1.55;color:var(--muted);margin-bottom:0}
     .hero-screen .lede{color:#D9E6FB}
     .hero-image{
       position:relative;overflow:hidden;border-radius:20px;margin:0;width:100%;
@@ -139,7 +155,7 @@
     .decision-note{font-size:15px;color:var(--muted);margin-bottom:0}
     .market-shell{
       border:1px solid var(--line);border-radius:22px;overflow:hidden;background:#FAFCFF;
-      box-shadow:var(--shadow);height:var(--market-viewport-height,58dvh);min-height:360px;max-height:680px;
+      box-shadow:var(--shadow);width:100%;min-width:0;
       display:flex;flex-direction:column;
     }
     .market-top{background:var(--fred-navy);color:#fff;padding:14px 14px 16px;display:grid;gap:12px;flex:0 0 auto}
@@ -154,7 +170,7 @@
     }
     .searchbox input{min-width:0;flex:1;border:0;outline:0;background:transparent;color:var(--text);font:inherit;padding:0}
     .searchbox input::placeholder{color:#53657D;opacity:1}
-    .market-body{padding:14px;display:grid;gap:14px;flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;scroll-behavior:smooth}
+    .market-body{padding:clamp(12px,3.5vw,16px);display:grid;gap:clamp(12px,3.5vw,16px);min-width:0;overflow:visible}
     .market-meta{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
     .market-meta h3{margin:0;font-size:21px}
     .market-meta span{font-size:14px;color:var(--muted)}
@@ -205,7 +221,7 @@
       display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:15px;text-align:left;cursor:pointer
     }
     .suggestion span{color:var(--muted);font-size:14px}
-    .product-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .product-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,9rem),1fr));gap:clamp(8px,2.5vw,12px);min-width:0}
     .product-card{
       border:1px solid var(--line);border-radius:14px;background:#fff;overflow:hidden;min-width:0;
       display:grid;text-align:left;padding:0;color:var(--text);text-decoration:none;cursor:pointer
@@ -265,16 +281,9 @@
     .back-button{min-height:44px;border:0;background:transparent;color:var(--muted);padding:8px 2px;font-size:14px;font-weight:800;cursor:pointer}
     @keyframes enter{from{transform:translateY(5px)}to{transform:none}}
     @media (min-width:700px){
-      body{padding:28px 0}
-      .shell{min-height:calc(100dvh - 56px);border-radius:28px;box-shadow:0 24px 70px rgba(11,29,58,.16)}
-      .hero-screen{border-radius:24px;margin-bottom:-18px}
-    }
-    @media (max-width:360px){
-      .shell{padding-left:14px;padding-right:14px}
-      .hero-screen{margin-left:-14px;margin-right:-14px}
-      h1{font-size:44px}
-      h2{font-size:29px}
-      .product-grid{gap:8px}
+      body{padding-block:clamp(20px,4dvh,32px)}
+      .shell{min-height:calc(100dvh - clamp(40px,8dvh,64px));border-radius:28px;box-shadow:0 24px 70px rgba(11,29,58,.16)}
+      .hero-screen{border-radius:24px}
     }
     @media (prefers-reduced-motion:reduce){
       *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}
@@ -489,10 +498,12 @@
       function openProduct(productId){
         var product=productById(productId);
         if(!product){return;}
-        var body=document.querySelector(".market-body");
-        state.marketScroll=body?body.scrollTop:0;
+        state.marketScroll=window.scrollY||0;
         state.productDetail=productId;
         render(false);
+        requestAnimationFrame(function(){
+          document.querySelector(".market-shell")?.scrollIntoView({block:"start",behavior:"auto"});
+        });
       }
       function externalProductScreen(){
         var product=productById(state.externalProduct);
@@ -538,14 +549,13 @@
       function observeInfiniteSentinel(){
         if(window.__fredInfiniteObserver){window.__fredInfiniteObserver.disconnect();}
         var sentinel=document.getElementById("infinite-sentinel");
-        var scrollRoot=document.querySelector(".market-body");
-        if(!sentinel||!scrollRoot||state.resultsMode!=="infinite"||!("IntersectionObserver" in window)){return;}
+        if(!sentinel||state.resultsMode!=="infinite"||!("IntersectionObserver" in window)){return;}
         window.__fredInfiniteObserver=new IntersectionObserver(function(entries){
           if(entries.some(function(entry){return entry.isIntersecting;})){
             window.__fredInfiniteObserver.disconnect();
             appendInfiniteProducts();
           }
-        },{root:scrollRoot,rootMargin:"100px 0px",threshold:0.01});
+        },{root:null,rootMargin:"220px 0px",threshold:0.01});
         window.__fredInfiniteObserver.observe(sentinel);
       }
       function marketplacePreview(stage){
@@ -575,7 +585,7 @@
           var infiniteItems=filteredProducts();
           var loadedCount=Math.min(infiniteItems.length,PAGE_SIZE+(state.infiniteBatch*PAGE_SIZE));
           var done=loadedCount>=infiniteItems.length;
-          results='<div class="results-control" data-results-mode="infinite"><div class="infinite-note" id="infinite-sentinel" aria-live="polite" data-loaded="'+(state.infiniteBatch>0?"true":"false")+'"><span aria-hidden="true">'+(done?"✓":"•••")+'</span><span>'+(done?"All matching products loaded":"Scroll inside the marketplace to load more products")+'</span></div></div>';
+          results='<div class="results-control" data-results-mode="infinite"><div class="infinite-note" id="infinite-sentinel" aria-live="polite" data-loaded="'+(state.infiniteBatch>0?"true":"false")+'"><span aria-hidden="true">'+(done?"✓":"•••")+'</span><span>'+(done?"All matching products loaded":"Keep scrolling to load more products")+'</span></div></div>';
         }else if(state.resultsMode==="pages"){
           var pages=pageCount();
           var pageButtons="";
@@ -679,27 +689,10 @@
         if(state.step===9){return evidenceScreen();}
         return resultScreen();
       }
-      function fitMarketplaceViewport(){
-        var market=document.querySelector(".market-shell");
-        if(!market){return;}
-        var viewportHeight=(window.visualViewport&&window.visualViewport.height)||window.innerHeight||800;
-        var rect=market.getBoundingClientRect();
-        var screen=market.closest(".screen");
-        var actions=screen?screen.querySelector(".actions"):null;
-        var actionHeight=actions?actions.getBoundingClientRect().height:0;
-        var reserve=actionHeight+42+Math.max(0,parseFloat(getComputedStyle(document.documentElement).fontSize)||16);
-        var available=Math.floor(viewportHeight-rect.top-reserve);
-        var proportional=Math.floor(viewportHeight*0.62);
-        var target=Math.max(360,Math.min(680,Math.max(available,Math.min(proportional,520))));
-        market.style.setProperty("--market-viewport-height",target+"px");
-        market.dataset.viewportHeight=String(target);
-      }
-
       function render(focusHeading){
         var app=document.getElementById("app");
         app.innerHTML='<div class="shell">'+topbar()+progress()+current()+'</div>';
         bind();
-        requestAnimationFrame(fitMarketplaceViewport);
         if(focusHeading!==false){
           requestAnimationFrame(function(){
             var h=app.querySelector("h1,h2");
@@ -786,8 +779,7 @@
               state.productDetail=null;
               render(false);
               requestAnimationFrame(function(){
-                var body=document.querySelector(".market-body");
-                if(body){body.scrollTop=state.marketScroll||0;}
+                window.scrollTo({top:state.marketScroll||0,behavior:"auto"});
               });
               return;
             }
@@ -798,8 +790,7 @@
               state.marketScroll=0;
               render(false);
               requestAnimationFrame(function(){
-                var body=document.querySelector(".market-body");
-                if(body){body.scrollTop=0;}
+                document.querySelector(".market-shell")?.scrollIntoView({block:"start",behavior:"auto"});
               });
               return;
             }
@@ -861,8 +852,6 @@
         window.scrollTo({top:0,behavior:"auto"});
         render(true);
       }
-      window.addEventListener("resize",function(){requestAnimationFrame(fitMarketplaceViewport);});
-      if(window.visualViewport){window.visualViewport.addEventListener("resize",function(){requestAnimationFrame(fitMarketplaceViewport);});}
       render(true);
     })();
   </script>
