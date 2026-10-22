@@ -70,6 +70,12 @@
       gap:clamp(14px,2.5dvh,20px);
       background:var(--surface);
     }
+    body.title-active{background:var(--fred-navy)}
+    .shell.title-mode{
+      width:100%;max-width:none;min-height:100dvh;margin:0;padding:0;gap:0;
+      background:var(--fred-navy);border-radius:0;box-shadow:none;
+    }
+    .shell.title-mode>.topbar,.shell.title-mode>.progress{display:none}
     .topbar{display:flex;align-items:center;min-height:48px;gap:clamp(4px,1.5vw,8px);min-width:0}
     .brand{display:flex;align-items:center;gap:clamp(4px,1.5vw,7px);text-decoration:none;color:var(--text);min-width:0;flex:1}
     .brand-logo{width:clamp(72px,22vw,90px);height:auto;object-fit:contain;background:transparent;flex:0 0 auto}
@@ -110,7 +116,7 @@
     h3{font-size:clamp(1.125rem,4.8vw,1.25rem);line-height:1.18;letter-spacing:-.025em;margin-bottom:6px}
     .lede{font-size:clamp(1rem,4vw,1.125rem);line-height:1.55;color:var(--muted);margin-bottom:0}
     .hero-screen .lede{color:#D9E6FB}
-    .title-screen{position:relative;overflow:hidden;justify-content:space-between;background:var(--fred-navy);color:#fff;min-height:calc(100dvh - 40px);padding-top:clamp(28px,8dvh,64px);padding-bottom:max(28px,env(safe-area-inset-bottom))}
+    .title-screen{position:relative;overflow:hidden;justify-content:space-between;background:var(--fred-navy);color:#fff;min-height:100dvh;padding-top:max(clamp(28px,8dvh,64px),env(safe-area-inset-top));padding-right:max(var(--pad-inline),env(safe-area-inset-right));padding-bottom:max(28px,env(safe-area-inset-bottom));padding-left:max(var(--pad-inline),env(safe-area-inset-left))}
     .title-screen:before,.title-screen:after{content:"";position:absolute;pointer-events:none;border:1px solid rgba(47,115,246,.22);border-radius:50%}
     .title-screen:before{width:78vw;height:78vw;left:-42vw;top:18vh;background:radial-gradient(circle at 70% 30%,rgba(47,115,246,.18),transparent 68%)}
     .title-screen:after{width:92vw;height:92vw;right:-58vw;bottom:-18vh;background:radial-gradient(circle at 30% 30%,rgba(47,115,246,.14),transparent 68%)}
@@ -298,6 +304,8 @@
     @media (min-width:700px){
       body{padding-block:clamp(20px,4dvh,32px)}
       .shell{min-height:calc(100dvh - clamp(40px,8dvh,64px));border-radius:28px;box-shadow:0 24px 70px rgba(11,29,58,.16)}
+      body.title-active{padding:0}
+      .shell.title-mode{min-height:100dvh;border-radius:0;box-shadow:none}
       .hero-screen{border-radius:24px}
     }
     @media (prefers-reduced-motion:reduce){
@@ -714,7 +722,9 @@
       }
       function render(focusHeading){
         var app=document.getElementById("app");
-        app.innerHTML='<div class="shell">'+topbar()+progress()+current()+'</div>';
+        var titleMode=state.step===0&&!state.externalProduct;
+        document.body.classList.toggle("title-active",titleMode);
+        app.innerHTML='<div class="shell'+(titleMode?' title-mode':'')+'">'+topbar()+progress()+current()+'</div>';
         bind();
         if(focusHeading!==false){
           requestAnimationFrame(function(){
