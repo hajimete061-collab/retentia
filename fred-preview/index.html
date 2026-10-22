@@ -110,6 +110,19 @@
     h3{font-size:clamp(1.125rem,4.8vw,1.25rem);line-height:1.18;letter-spacing:-.025em;margin-bottom:6px}
     .lede{font-size:clamp(1rem,4vw,1.125rem);line-height:1.55;color:var(--muted);margin-bottom:0}
     .hero-screen .lede{color:#D9E6FB}
+    .title-screen{position:relative;overflow:hidden;justify-content:space-between;background:var(--fred-navy);color:#fff;min-height:calc(100dvh - 40px);padding-top:clamp(28px,8dvh,64px);padding-bottom:max(28px,env(safe-area-inset-bottom))}
+    .title-screen:before,.title-screen:after{content:"";position:absolute;pointer-events:none;border:1px solid rgba(47,115,246,.22);border-radius:50%}
+    .title-screen:before{width:78vw;height:78vw;left:-42vw;top:18vh;background:radial-gradient(circle at 70% 30%,rgba(47,115,246,.18),transparent 68%)}
+    .title-screen:after{width:92vw;height:92vw;right:-58vw;bottom:-18vh;background:radial-gradient(circle at 30% 30%,rgba(47,115,246,.14),transparent 68%)}
+    .title-brand,.title-content,.title-meta{position:relative;z-index:1}
+    .title-brand{display:flex;justify-content:center}.title-brand img{width:min(48vw,190px);height:auto}
+    .title-content{text-align:center;display:grid;gap:clamp(18px,4dvh,28px);justify-items:center}
+    .title-content h1{font-family:Georgia,"Times New Roman",serif;font-size:clamp(3rem,14vw,5.2rem);line-height:.88;letter-spacing:-.055em;margin:0;max-width:10ch}
+    .title-line{display:block;white-space:nowrap}.title-underline{position:relative;display:inline-block}.title-underline:after{content:"";position:absolute;left:-3%;right:-3%;bottom:-.18em;height:.12em;border-radius:50%;background:var(--fred-blue);transform:rotate(-2deg)}
+    .title-kicker{margin:0;border:1px solid var(--fred-blue);border-radius:999px;padding:8px 16px;color:#D9E6FB;font-size:14px;font-weight:800;letter-spacing:.16em}
+    .title-copy{max-width:28ch;margin:0;color:#D9E6FB;font-size:clamp(1rem,4.5vw,1.2rem)}
+    .title-screen .actions{width:100%;max-width:30rem}.title-screen .button.primary{min-height:58px;font-size:1.05rem}
+    .title-meta{height:1px}
     .hero-image{
       overflow:hidden;border-radius:20px;margin:0;width:100%;
       background:#D9E3EF;box-shadow:0 20px 60px rgba(0,0,0,.26);
@@ -352,7 +365,7 @@
       }
       function progress(){
         if(state.step===0){return "";}
-        var pct=Math.round((Math.min(state.step,9)/9)*100);
+        var pct=Math.round((Math.min(state.step,10)/10)*100);
         return '<div class="progress" role="progressbar" aria-label="Experience progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="'+pct+'"><span style="width:'+pct+'%"></span></div>';
       }
       function topbar(){
@@ -360,7 +373,6 @@
         return '<div class="topbar">'+
           '<a class="brand" href="https://meet-fred.com/" target="_blank" rel="noreferrer">'+
             '<img class="brand-logo" src="'+LOGO_URL+'" alt="Fred" />'+
-            '<span class="brand-copy" aria-label="The User Research Shepherd"><span class="brand-line">The User Research</span><span class="brand-line">Shepherd</span></span>'+
           '</a>'+
           '<span class="step-pill">60s case</span>'+
         '</div>';
@@ -372,12 +384,20 @@
       function back(){
         return state.step>1?'<div class="back-row"><button class="back-button" type="button" data-action="back">← Back</button></div>':"";
       }
+      function titleScreen(){
+        return '<section class="screen title-screen" aria-labelledby="title-screen-heading">'+
+          '<div class="title-brand"><img src="'+LOGO_WHITE_URL+'" alt="Fred" /></div>'+ 
+          '<div class="title-content"><h1 id="title-screen-heading"><span class="title-line">THE COST</span><span class="title-line title-underline">OF GUESSING</span></h1><p class="title-kicker">60 SECOND CHALLENGE</p><p class="title-copy">Three decisions. Real research. See what you would have shipped.</p></div>'+ 
+          actionButtons("Start the challenge","start",false)+
+          '<div class="title-meta" aria-hidden="true"></div>'+ 
+        '</section>';
+      }
       function hook(){
         return '<section class="screen hero-screen" aria-labelledby="hook-title">'+
-          '<div class="hero-brand"><img src="'+LOGO_WHITE_URL+'" alt="Fred" /><div><p class="hero-kicker">The cost of guessing</p></div></div>'+
+          '<div class="hero-brand"><img src="'+LOGO_WHITE_URL+'" alt="Fred" /></div>'+
           '<div><h1 id="hook-title">Would you ship this?</h1><p class="lede">Three product calls. One marketplace. Real evidence waiting on the other side.</p></div>'+
           '<figure class="hero-image"><img src="'+HERO_URL+'" alt="Minimal furniture and decor in a clean shopping-style setting" /><figcaption class="hero-badge">A polished feature can still be the wrong feature.</figcaption></figure>'+
-          actionButtons("Take the challenge","start",false)+
+          actionButtons("See the brief","brief",false)+
         '</section>';
       }
       function brief(){
@@ -679,16 +699,17 @@
       }
       function current(){
         if(state.externalProduct){return externalProductScreen();}
-        if(state.step===0){return hook();}
-        if(state.step===1){return brief();}
-        if(state.step===2){return choiceScreen({key:"linkBehavior",number:1,question:"When a shopper opens a product, what happens?",note:"You want fast comparison without making search feel fragile.",options:[{value:"same",title:"Stay in this tab",desc:"The product replaces the search view; Back returns to results."},{value:"newtab",title:"Open a new tab",desc:"Search stays put while every product opens separately."}]});}
-        if(state.step===3){return buildScreen(1,"The product-link rule is live.","This is the marketplace your team would now hand to engineering.","linkBehavior");}
-        if(state.step===4){return choiceScreen({key:"resultsMode",number:2,question:"How should shoppers browse deeper results?",note:"The team wants the catalog to feel effortless on mobile.",options:[{value:"pages",title:"Pagination",desc:"Results have clear pages and a stable stopping point."},{value:"infinite",title:"Infinite scroll",desc:"More products appear automatically as people keep scrolling."}]});}
-        if(state.step===5){return buildScreen(2,"Browsing behavior is now part of the build.","Your first choice is still there. This one layers on top of it.","resultsMode");}
-        if(state.step===6){return choiceScreen({key:"discovery",number:3,question:"How should shoppers narrow the catalog?",note:"People need categories without turning search into a control panel.",options:[{value:"dropdown",title:"Keep a category dropdown",desc:"One compact control keeps the header clean."},{value:"visible",title:"Visible filters + search suggestions",desc:"Categories become discoverable while shoppers type and browse."}]});}
-        if(state.step===7){return buildScreen(3,"This is the product you would ship.","All three decisions are now visible in the marketplace.","discovery");}
-        if(state.step===8){return confidenceScreen();}
-        if(state.step===9){return evidenceScreen();}
+        if(state.step===0){return titleScreen();}
+        if(state.step===1){return hook();}
+        if(state.step===2){return brief();}
+        if(state.step===3){return choiceScreen({key:"linkBehavior",number:1,question:"When a shopper opens a product, what happens?",note:"You want fast comparison without making search feel fragile.",options:[{value:"same",title:"Stay in this tab",desc:"The product replaces the search view; Back returns to results."},{value:"newtab",title:"Open a new tab",desc:"Search stays put while every product opens separately."}]});}
+        if(state.step===4){return buildScreen(1,"The product-link rule is live.","This is the marketplace your team would now hand to engineering.","linkBehavior");}
+        if(state.step===5){return choiceScreen({key:"resultsMode",number:2,question:"How should shoppers browse deeper results?",note:"The team wants the catalog to feel effortless on mobile.",options:[{value:"pages",title:"Pagination",desc:"Results have clear pages and a stable stopping point."},{value:"infinite",title:"Infinite scroll",desc:"More products appear automatically as people keep scrolling."}]});}
+        if(state.step===6){return buildScreen(2,"Browsing behavior is now part of the build.","Your first choice is still there. This one layers on top of it.","resultsMode");}
+        if(state.step===7){return choiceScreen({key:"discovery",number:3,question:"How should shoppers narrow the catalog?",note:"People need categories without turning search into a control panel.",options:[{value:"dropdown",title:"Keep a category dropdown",desc:"One compact control keeps the header clean."},{value:"visible",title:"Visible filters + search suggestions",desc:"Categories become discoverable while shoppers type and browse."}]});}
+        if(state.step===8){return buildScreen(3,"This is the product you would ship.","All three decisions are now visible in the marketplace.","discovery");}
+        if(state.step===9){return confidenceScreen();}
+        if(state.step===10){return evidenceScreen();}
         return resultScreen();
       }
       function render(focusHeading){
@@ -843,11 +864,12 @@
       }
       function act(action){
         if(action==="start"){state.step=1;}
-        else if(action==="next"){state.step=Math.min(8,state.step+1);}
+        else if(action==="brief"){state.step=2;}
+        else if(action==="next"){state.step=Math.min(9,state.step+1);}
         else if(action==="back"){state.step=Math.max(1,state.step-1);}
-        else if(action==="lock"){state.revealStage=0;state.step=9;}
+        else if(action==="lock"){state.revealStage=0;state.step=10;}
         else if(action==="reveal"){state.revealStage=Math.min(2,state.revealStage+1);}
-        else if(action==="result"){state.step=10;}
+        else if(action==="result"){state.step=11;}
         else if(action==="restart"){
           state={step:0,linkBehavior:null,resultsMode:null,discovery:null,confidence:75,revealStage:0,emailSent:false,productDetail:null,dropdownOpen:false,categorySelection:"All categories",query:"",filterFurniture:false,filterUnder100:false,filterShips:false,currentPage:1,marketScroll:0,cartItems:[],cartOpen:false,infiniteBatch:0,externalProduct:null};
         }
