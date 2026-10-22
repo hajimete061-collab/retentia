@@ -76,6 +76,7 @@
       background:var(--fred-navy);border-radius:0;box-shadow:none;
     }
     .shell.title-mode>.topbar,.shell.title-mode>.progress{display:none}
+    .shell.title-mode .title-screen{animation:none}
     .topbar{display:flex;align-items:center;min-height:48px;gap:clamp(4px,1.5vw,8px);min-width:0}
     .brand{display:flex;align-items:center;gap:clamp(4px,1.5vw,7px);text-decoration:none;color:var(--text);min-width:0;flex:1}
     .brand-logo{width:clamp(72px,22vw,90px);height:auto;object-fit:contain;background:transparent;flex:0 0 auto}
@@ -122,9 +123,9 @@
     .title-screen:after{width:92vw;height:92vw;right:-58vw;bottom:-18vh;background:radial-gradient(circle at 30% 30%,rgba(47,115,246,.14),transparent 68%)}
     .title-brand,.title-content,.title-meta{position:relative;z-index:1}
     .title-brand{display:flex;justify-content:center}.title-brand img{width:min(48vw,190px);height:auto}
-    .title-content{text-align:center;display:grid;gap:clamp(18px,4dvh,28px);justify-items:center}
-    .title-content h1{font-family:Georgia,"Times New Roman",serif;font-size:clamp(3rem,14vw,5.2rem);line-height:.88;letter-spacing:-.055em;margin:0;max-width:10ch}
-    .title-line{display:block;white-space:nowrap}.title-underline{position:relative;display:inline-block}.title-underline:after{content:"";position:absolute;left:-3%;right:-3%;bottom:-.18em;height:.12em;border-radius:50%;background:var(--fred-blue);transform:rotate(-2deg)}
+    .title-content{text-align:center;display:grid;gap:clamp(18px,4dvh,28px);justify-items:center;width:100%;max-width:34rem;margin-inline:auto}
+    .title-content h1{font-family:Georgia,"Times New Roman",serif;font-size:clamp(2.75rem,11.5vw,4.6rem);line-height:.9;letter-spacing:-.05em;margin:0;width:100%;max-width:100%;text-align:center}
+    .title-line{display:block;white-space:nowrap;width:100%;text-align:center}.title-underline{position:relative;display:inline-block}.title-underline:after{content:"";position:absolute;left:-3%;right:-3%;bottom:-.18em;height:.12em;border-radius:50%;background:var(--fred-blue);transform:rotate(-2deg)}
     .title-kicker{margin:0;border:1px solid var(--fred-blue);border-radius:999px;padding:8px 16px;color:#D9E6FB;font-size:14px;font-weight:800;letter-spacing:.16em}
     .title-copy{max-width:28ch;margin:0;color:#D9E6FB;font-size:clamp(1rem,4.5vw,1.2rem)}
     .title-screen .actions{width:100%;max-width:30rem}.title-screen .button.primary{min-height:58px;font-size:1.05rem}
