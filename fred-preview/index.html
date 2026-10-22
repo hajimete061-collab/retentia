@@ -292,13 +292,9 @@
     }
     .workflow strong{font-size:18px}
     .workflow p{margin:0;color:var(--muted);font-size:15px}
-    .email-form{display:grid;gap:10px}
-    .email-form label{font-size:15px;font-weight:800}
-    .email-form input{
-      min-height:52px;border:1px solid #AEBED1;border-radius:12px;background:#fff;color:var(--text);
-      padding:0 14px;font-size:16px
-    }
-    .form-status{min-height:24px;font-size:14px;color:var(--success);font-weight:700;margin:0}
+    .hubspot-form-shell{display:grid;gap:10px}
+    .hubspot-form-shell .eyebrow{margin:0}
+    .hs-form-frame{width:100%;min-height:220px}
     .back-row{display:flex;justify-content:flex-start}
     .back-button{min-height:44px;border:0;background:transparent;color:var(--muted);padding:8px 2px;font-size:14px;font-weight:800;cursor:pointer}
     @keyframes enter{from{transform:translateY(5px)}to{transform:none}}
@@ -332,7 +328,6 @@
         discovery:null,
         confidence:75,
         revealStage:0,
-        emailSent:false,
         productDetail:null,
         dropdownOpen:false,
         categorySelection:"All categories",
@@ -702,7 +697,7 @@
           '<div><p class="eyebrow">Your result</p><div class="result-score">'+n+'/3</div><h2 id="result-title">'+copy.title+'</h2><p class="lede">'+copy.copy+'</p></div>'+
           '<div class="result-card"><p class="eyebrow">How much are your assumptions costing you?</p><h2>'+cost+'</h2><p>Fred is built for the moment before product, design, budget, and engineering become committed.</p></div>'+
           '<div class="workflow"><strong>Recommended Fred workflow: Decision Evidence Sprint</strong><p>Frame the marketplace decision, test browse and search behavior with real users, connect the evidence to each assumption, review confidence and contradictions, then make the ship / change / test-again call.</p></div>'+
-          '<form class="email-form" id="checklist-form"><label for="email">Get the pre-build validation checklist</label><input id="email" name="email" type="email" autocomplete="email" placeholder="you@company.com" required /><button class="button primary" type="submit">Send my checklist</button><p class="form-status" id="form-status" role="status">'+(state.emailSent?"Checklist request captured.":"")+'</p></form>'+
+          '<div class="hubspot-form-shell"><p class="eyebrow">Get the pre-build validation checklist</p><div class="hs-form-frame" data-region="eu1" data-form-id="95dea87f-7339-4308-9374-0e0c344b9cb7" data-portal-id="146948896"></div></div>'+
           '<div class="actions"><a class="button secondary" href="https://meet-fred.com/" target="_blank" rel="noreferrer">See Fred</a><button class="button ghost" type="button" data-action="restart">Run the case again</button></div>'+
         '</section>';
       }
@@ -734,7 +729,19 @@
           });
         }
       }
+      function mountHubSpotForm(){
+        var frame=document.querySelector('.hs-form-frame[data-region="eu1"][data-form-id="95dea87f-7339-4308-9374-0e0c344b9cb7"][data-portal-id="146948896"]');
+        if(!frame||frame.querySelector("iframe")){return;}
+        var previous=document.querySelector('script[data-fred-hubspot-embed="true"]');
+        if(previous){previous.remove();}
+        var script=document.createElement("script");
+        script.src="https://js-eu1.hsforms.net/forms/embed/146948896.js";
+        script.defer=true;
+        script.setAttribute("data-fred-hubspot-embed","true");
+        document.head.appendChild(script);
+      }
       function bind(){
+        mountHubSpotForm();
         document.querySelectorAll("[data-action]").forEach(function(btn){
           btn.addEventListener("click",function(){act(btn.getAttribute("data-action"));});
         });
@@ -863,15 +870,6 @@
           });
         }
         observeInfiniteSentinel();
-        var form=document.getElementById("checklist-form");
-        if(form){
-          form.addEventListener("submit",function(e){
-            e.preventDefault();
-            state.emailSent=true;
-            var status=document.getElementById("form-status");
-            if(status){status.textContent="Checklist request captured.";}
-          });
-        }
       }
       function act(action){
         if(action==="start"){state.step=1;}
@@ -882,7 +880,7 @@
         else if(action==="reveal"){state.revealStage=Math.min(2,state.revealStage+1);}
         else if(action==="result"){state.step=11;}
         else if(action==="restart"){
-          state={step:0,linkBehavior:null,resultsMode:null,discovery:null,confidence:75,revealStage:0,emailSent:false,productDetail:null,dropdownOpen:false,categorySelection:"All categories",query:"",filterFurniture:false,filterUnder100:false,filterShips:false,currentPage:1,marketScroll:0,cartItems:[],cartOpen:false,infiniteBatch:0,externalProduct:null};
+          state={step:0,linkBehavior:null,resultsMode:null,discovery:null,confidence:75,revealStage:0,productDetail:null,dropdownOpen:false,categorySelection:"All categories",query:"",filterFurniture:false,filterUnder100:false,filterShips:false,currentPage:1,marketScroll:0,cartItems:[],cartOpen:false,infiniteBatch:0,externalProduct:null};
         }
         window.scrollTo({top:0,behavior:"auto"});
         render(true);
