@@ -429,19 +429,56 @@
           actionButtons("Build this into the app","next",!selected)+
         '</section>';
       }
+      var PRODUCT_IMAGE_SPECS={"chair":{"title":"Oak lounge chair","category":"Furniture","kind":"oak-lounge-chair"},"headphones":{"title":"Studio headphones","category":"Audio","kind":"studio-headphones"},"skincare":{"title":"Clean skin set","category":"Beauty","kind":"clean-skin-set"},"armchair":{"title":"Soft armchair","category":"Furniture","kind":"soft-armchair"},"wireless":{"title":"Wireless headphones","category":"Audio","kind":"wireless-headphones"},"carekit":{"title":"Daily care kit","category":"Beauty","kind":"daily-care-kit"},"sidechair":{"title":"Dining side chair","category":"Furniture","kind":"dining-side-chair"},"travelphones":{"title":"Travel headphones","category":"Audio","kind":"travel-headphones"},"nightset":{"title":"Night repair set","category":"Beauty","kind":"night-repair-set"},"accentchair":{"title":"Accent armchair","category":"Furniture","kind":"accent-armchair"},"compactaudio":{"title":"Compact headphones","category":"Audio","kind":"compact-headphones"},"travelcare":{"title":"Travel skin set","category":"Beauty","kind":"travel-skin-set"}};
+      function productImageUrl(kind){
+        var body="";
+        if(kind==="oak-lounge-chair"){
+          body='<ellipse cx="300" cy="495" rx="165" ry="28" fill="#cbd8e5"/><rect x="150" y="245" width="300" height="145" rx="38" fill="#d9aa7d"/><rect x="165" y="180" width="270" height="125" rx="38" fill="#e2b98f"/><path d="M175 375l-35 125M425 375l35 125" stroke="#65462f" stroke-width="22" stroke-linecap="round"/>';
+        }else if(kind==="soft-armchair"){
+          body='<ellipse cx="300" cy="505" rx="175" ry="28" fill="#cbd8e5"/><rect x="145" y="205" width="310" height="220" rx="86" fill="#9db7d5"/><rect x="185" y="275" width="230" height="125" rx="48" fill="#dbe6f1"/><rect x="115" y="290" width="95" height="135" rx="42" fill="#88a6c8"/><rect x="390" y="290" width="95" height="135" rx="42" fill="#88a6c8"/><path d="M190 410v80M410 410v80" stroke="#3f5872" stroke-width="18" stroke-linecap="round"/>';
+        }else if(kind==="dining-side-chair"){
+          body='<ellipse cx="300" cy="505" rx="135" ry="24" fill="#cbd8e5"/><rect x="210" y="165" width="180" height="190" rx="26" fill="#c8915f"/><rect x="190" y="330" width="220" height="72" rx="20" fill="#d9aa7d"/><path d="M220 395l-28 105M380 395l28 105" stroke="#5b402c" stroke-width="18" stroke-linecap="round"/>';
+        }else if(kind==="accent-armchair"){
+          body='<ellipse cx="300" cy="505" rx="160" ry="28" fill="#cbd8e5"/><path d="M155 285c0-95 66-155 145-155s145 60 145 155v135H155V285z" fill="#6f94bd"/><path d="M195 285c0-60 45-100 105-100s105 40 105 100v70H195v-70z" fill="#dbe6f1"/><rect x="175" y="350" width="250" height="85" rx="34" fill="#90adca"/><path d="M210 425l-22 70M390 425l22 70" stroke="#344e68" stroke-width="17" stroke-linecap="round"/>';
+        }else if(kind==="studio-headphones"){
+          body='<circle cx="300" cy="300" r="190" fill="#f8fbff"/><path d="M180 325a120 120 0 0 1 240 0" fill="none" stroke="#2f73f6" stroke-width="45" stroke-linecap="round"/><rect x="135" y="305" width="85" height="165" rx="40" fill="#0b1d3a"/><rect x="380" y="305" width="85" height="165" rx="40" fill="#0b1d3a"/><rect x="158" y="335" width="40" height="104" rx="18" fill="#244f8f"/><rect x="402" y="335" width="40" height="104" rx="18" fill="#244f8f"/>';
+        }else if(kind==="wireless-headphones"){
+          body='<circle cx="300" cy="305" r="185" fill="#f8fbff"/><path d="M175 320a125 125 0 0 1 250 0" fill="none" stroke="#174faf" stroke-width="34" stroke-linecap="round"/><rect x="140" y="300" width="92" height="170" rx="46" fill="#2f73f6"/><rect x="368" y="300" width="92" height="170" rx="46" fill="#2f73f6"/><circle cx="186" cy="382" r="11" fill="#d9e6ff"/><circle cx="414" cy="382" r="11" fill="#d9e6ff"/>';
+        }else if(kind==="travel-headphones"){
+          body='<ellipse cx="300" cy="500" rx="150" ry="26" fill="#cbd8e5"/><path d="M205 300a95 95 0 0 1 190 0" fill="none" stroke="#2f73f6" stroke-width="30" stroke-linecap="round"/><g transform="rotate(-18 220 355)"><rect x="170" y="300" width="92" height="145" rx="42" fill="#0b1d3a"/><rect x="196" y="328" width="40" height="88" rx="18" fill="#244f8f"/></g><g transform="rotate(18 380 355)"><rect x="338" y="300" width="92" height="145" rx="42" fill="#0b1d3a"/><rect x="364" y="328" width="40" height="88" rx="18" fill="#244f8f"/></g>';
+        }else if(kind==="compact-headphones"){
+          body='<circle cx="300" cy="300" r="165" fill="#f8fbff"/><path d="M205 300a95 95 0 0 1 190 0" fill="none" stroke="#5d8ed1" stroke-width="26" stroke-linecap="round"/><rect x="170" y="292" width="70" height="132" rx="34" fill="#173a67"/><rect x="360" y="292" width="70" height="132" rx="34" fill="#173a67"/><rect x="190" y="320" width="30" height="76" rx="14" fill="#79a9e8"/><rect x="380" y="320" width="30" height="76" rx="14" fill="#79a9e8"/>';
+        }else if(kind==="clean-skin-set"){
+          body='<ellipse cx="310" cy="493" rx="180" ry="28" fill="#cedae7"/><rect x="150" y="205" width="120" height="245" rx="28" fill="#fff" stroke="#9db2ca" stroke-width="8"/><rect x="180" y="155" width="60" height="60" rx="12" fill="#2f73f6"/><rect x="315" y="260" width="125" height="190" rx="24" fill="#dfe9f5" stroke="#9db2ca" stroke-width="8"/><circle cx="378" cy="245" r="42" fill="#174faf"/>';
+        }else if(kind==="daily-care-kit"){
+          body='<ellipse cx="300" cy="500" rx="175" ry="27" fill="#cedae7"/><rect x="135" y="220" width="100" height="225" rx="24" fill="#fff" stroke="#9db2ca" stroke-width="8"/><rect x="160" y="175" width="50" height="52" rx="10" fill="#2f73f6"/><path d="M275 225h95l25 220H250l25-220z" fill="#dfe9f5" stroke="#9db2ca" stroke-width="8"/><rect x="390" y="330" width="95" height="115" rx="28" fill="#9fc0e8"/>';
+        }else if(kind==="night-repair-set"){
+          body='<ellipse cx="300" cy="500" rx="170" ry="27" fill="#c7d4e2"/><rect x="145" y="245" width="105" height="200" rx="24" fill="#173a67"/><rect x="175" y="195" width="45" height="55" rx="9" fill="#0b1d3a"/><rect x="285" y="285" width="115" height="160" rx="26" fill="#315f98"/><rect x="420" y="345" width="85" height="100" rx="25" fill="#8ba9cb"/><path d="M420 175a62 62 0 1 0 0 124 70 70 0 0 1 0-124z" fill="#d7e6fa"/>';
+        }else if(kind==="travel-skin-set"){
+          body='<ellipse cx="300" cy="505" rx="175" ry="26" fill="#cedae7"/><path d="M140 300h320l-35 155H175l-35-155z" fill="#bdd0e4"/><rect x="165" y="255" width="270" height="75" rx="34" fill="#8eaccb"/><rect x="195" y="220" width="65" height="155" rx="20" fill="#fff" stroke="#9db2ca" stroke-width="7"/><rect x="280" y="240" width="60" height="135" rx="18" fill="#dfe9f5" stroke="#9db2ca" stroke-width="7"/><rect x="360" y="265" width="55" height="110" rx="17" fill="#2f73f6"/>';
+        }else{
+          throw new Error("Unknown product art kind: "+kind);
+        }
+        var svg='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600"><defs><linearGradient id="product-bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f3f7fb"/><stop offset="1" stop-color="#dfe9f5"/></linearGradient></defs><rect width="600" height="600" fill="url(#product-bg)"/>'+body+'</svg>';
+        return "data:image/svg+xml;charset=utf-8,"+encodeURIComponent(svg);
+      }
+      var PRODUCT_IMAGES={};
+      Object.keys(PRODUCT_IMAGE_SPECS).forEach(function(id){
+        PRODUCT_IMAGES[id]=productImageUrl(PRODUCT_IMAGE_SPECS[id].kind);
+      });
       var ALL_PRODUCTS=[
-        {id:"chair",category:"Furniture",title:"Oak lounge chair",price:"€129",priceNum:129,ships:true,img:CHAIR_URL,description:"Solid oak frame, soft upholstered seat, designed for living rooms and reading corners."},
-        {id:"headphones",category:"Audio",title:"Studio headphones",price:"€89",priceNum:89,ships:true,img:HEADPHONES_URL,description:"Closed-back over-ear headphones with a comfortable fit for focused listening."},
-        {id:"skincare",category:"Beauty",title:"Clean skin set",price:"€42",priceNum:42,ships:true,img:SKINCARE_URL,description:"A simple three-step skincare set designed for everyday routines."},
-        {id:"armchair",category:"Furniture",title:"Soft armchair",price:"€169",priceNum:169,ships:false,img:HERO_URL,description:"A soft accent chair with a compact footprint and a relaxed lounge profile."},
-        {id:"wireless",category:"Audio",title:"Wireless headphones",price:"€119",priceNum:119,ships:false,img:HEADPHONES_URL,description:"Wireless over-ear headphones for travel and daily listening."},
-        {id:"carekit",category:"Beauty",title:"Daily care kit",price:"€36",priceNum:36,ships:true,img:SKINCARE_URL,description:"A compact care set for simple daily routines."},
-        {id:"sidechair",category:"Furniture",title:"Dining side chair",price:"€99",priceNum:99,ships:true,img:CHAIR_URL,description:"A compact dining chair with a warm oak finish."},
-        {id:"travelphones",category:"Audio",title:"Travel headphones",price:"€139",priceNum:139,ships:true,img:HEADPHONES_URL,description:"Foldable over-ear headphones tuned for commuting and travel."},
-        {id:"nightset",category:"Beauty",title:"Night repair set",price:"€54",priceNum:54,ships:false,img:SKINCARE_URL,description:"An evening skincare set with cleanser, serum, and moisturizer."},
-        {id:"accentchair",category:"Furniture",title:"Accent armchair",price:"€189",priceNum:189,ships:false,img:HERO_URL,description:"A comfortable statement chair for small living spaces."},
-        {id:"compactaudio",category:"Audio",title:"Compact headphones",price:"€69",priceNum:69,ships:true,img:HEADPHONES_URL,description:"Lightweight everyday headphones with a compact over-ear fit."},
-        {id:"travelcare",category:"Beauty",title:"Travel skin set",price:"€29",priceNum:29,ships:true,img:SKINCARE_URL,description:"Travel-size skincare essentials packed for short trips."}
+        {id:"chair",category:"Furniture",title:"Oak lounge chair",price:"€129",priceNum:129,ships:true,img:PRODUCT_IMAGES["chair"],description:"Solid oak frame, soft upholstered seat, designed for living rooms and reading corners."},
+        {id:"headphones",category:"Audio",title:"Studio headphones",price:"€89",priceNum:89,ships:true,img:PRODUCT_IMAGES["headphones"],description:"Closed-back over-ear headphones with a comfortable fit for focused listening."},
+        {id:"skincare",category:"Beauty",title:"Clean skin set",price:"€42",priceNum:42,ships:true,img:PRODUCT_IMAGES["skincare"],description:"A simple three-step skincare set designed for everyday routines."},
+        {id:"armchair",category:"Furniture",title:"Soft armchair",price:"€169",priceNum:169,ships:false,img:PRODUCT_IMAGES["armchair"],description:"A soft accent chair with a compact footprint and a relaxed lounge profile."},
+        {id:"wireless",category:"Audio",title:"Wireless headphones",price:"€119",priceNum:119,ships:false,img:PRODUCT_IMAGES["wireless"],description:"Wireless over-ear headphones for travel and daily listening."},
+        {id:"carekit",category:"Beauty",title:"Daily care kit",price:"€36",priceNum:36,ships:true,img:PRODUCT_IMAGES["carekit"],description:"A compact care set for simple daily routines."},
+        {id:"sidechair",category:"Furniture",title:"Dining side chair",price:"€99",priceNum:99,ships:true,img:PRODUCT_IMAGES["sidechair"],description:"A compact dining chair with a warm oak finish."},
+        {id:"travelphones",category:"Audio",title:"Travel headphones",price:"€139",priceNum:139,ships:true,img:PRODUCT_IMAGES["travelphones"],description:"Foldable over-ear headphones tuned for commuting and travel."},
+        {id:"nightset",category:"Beauty",title:"Night repair set",price:"€54",priceNum:54,ships:false,img:PRODUCT_IMAGES["nightset"],description:"An evening skincare set with cleanser, serum, and moisturizer."},
+        {id:"accentchair",category:"Furniture",title:"Accent armchair",price:"€189",priceNum:189,ships:false,img:PRODUCT_IMAGES["accentchair"],description:"A comfortable statement chair for small living spaces."},
+        {id:"compactaudio",category:"Audio",title:"Compact headphones",price:"€69",priceNum:69,ships:true,img:PRODUCT_IMAGES["compactaudio"],description:"Lightweight everyday headphones with a compact over-ear fit."},
+        {id:"travelcare",category:"Beauty",title:"Travel skin set",price:"€29",priceNum:29,ships:true,img:PRODUCT_IMAGES["travelcare"],description:"Travel-size skincare essentials packed for short trips."}
       ];
       var PAGE_SIZE=4;
       var CATEGORY_COUNTS={"All categories":148,Furniture:54,Audio:38,Beauty:31};
