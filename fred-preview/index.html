@@ -292,30 +292,16 @@
     }
     .workflow strong{font-size:18px}
     .workflow p{margin:0;color:var(--muted);font-size:15px}
-    .hubspot-form-shell{display:grid;gap:10px;width:100%;max-width:none}
+    .hubspot-form-shell{display:grid;gap:10px;width:100%;max-width:none;overflow:visible}
     .hubspot-form-shell .eyebrow{margin:0}
-    .hs-form-frame{width:100%!important;max-width:none!important;min-height:220px}
-    .hsfc-Renderer,
-    .hsfc-Form,
-    .hsfc-Step,
-    .hsfc-Step__Content,
-    .hsfc-NavigationRow,
-    .hsfc-NavigationRow__Buttons{
-      width:100%!important;
+    .hs-form-frame{width:100%;max-width:none;min-height:220px;overflow:visible}
+    .hs-form-frame iframe{
+      display:block!important;
+      width:calc(100% + 80px)!important;
       max-width:none!important;
-      box-sizing:border-box!important;
-      margin-left:0!important;
-      margin-right:0!important;
-      padding-left:0!important;
-      padding-right:0!important;
-    }
-    .hsfc-Button{
-      width:100%!important;
-      max-width:none!important;
-      min-width:0!important;
-      height:52px!important;
-      flex:1 1 100%!important;
-      box-sizing:border-box!important;
+      margin-left:-40px!important;
+      margin-right:-40px!important;
+      border:0!important;
     }
     .back-row{display:flex;justify-content:flex-start}
     .back-button{min-height:44px;border:0;background:transparent;color:var(--muted);padding:8px 2px;font-size:14px;font-weight:800;cursor:pointer}
