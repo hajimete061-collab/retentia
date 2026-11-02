@@ -128,7 +128,7 @@
     .title-line{display:block;white-space:nowrap;width:100%;text-align:center}.title-underline{position:relative;display:inline-block}.title-underline:after{content:"";position:absolute;left:-3%;right:-3%;bottom:-.18em;height:.12em;border-radius:50%;background:var(--fred-blue);transform:rotate(-2deg)}
     .title-kicker{margin:0;border:1px solid var(--fred-blue);border-radius:999px;padding:8px 16px;color:#D9E6FB;font-size:14px;font-weight:800;letter-spacing:.16em}
     .title-copy{max-width:28ch;margin:0;color:#D9E6FB;font-size:clamp(1rem,4.5vw,1.2rem)}
-    .title-screen .actions{width:100%;max-width:30rem}.title-screen .button.primary{min-height:58px;font-size:1.05rem}
+    .title-screen .actions{width:100%;max-width:30rem;margin-inline:auto}.title-screen .button.primary{min-height:58px;font-size:1.05rem}
     .title-meta{height:1px}
     .hero-image{
       overflow:hidden;border-radius:20px;margin:0;width:100%;
@@ -288,7 +288,7 @@
     .result-card h2{margin:0;color:#fff}
     .result-card p{margin:0;color:#D7E5FA;font-size:16px}
     .workflow{
-      display:grid;gap:8px;padding:16px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)
+      display:grid;gap:8px;padding:16px 0;border-top:1px solid var(--line)
     }
     .workflow strong{font-size:18px}
     .workflow p{margin:0;color:var(--muted);font-size:15px}
@@ -746,7 +746,7 @@
           '<div><p class="eyebrow">Your result</p><div class="result-score">'+n+'/3</div><h2 id="result-title">'+copy.title+'</h2><p class="lede">'+copy.copy+'</p></div>'+
           '<div class="result-card"><p class="eyebrow">How much are your assumptions costing you?</p><h2>'+cost+'</h2><p>Fred is built for the moment before product, design, budget, and engineering become committed.</p></div>'+
           '<div class="workflow"><strong>Recommended Fred workflow: Decision Evidence Sprint</strong><p>Frame the marketplace decision, test browse and search behavior with real users, connect the evidence to each assumption, review confidence and contradictions, then make the ship / change / test-again call.</p></div>'+
-          '<div class="hubspot-form-shell"><p class="eyebrow">Get the pre-build validation checklist</p><div class="hs-form-frame" data-region="eu1" data-form-id="95dea87f-7339-4308-9374-0e0c344b9cb7" data-portal-id="146948896"></div></div>'+
+          '<div class="hubspot-form-shell"><div class="hs-form-frame" data-region="eu1" data-form-id="95dea87f-7339-4308-9374-0e0c344b9cb7" data-portal-id="146948896"></div></div>'+
           '<div class="actions"><a class="button secondary" href="https://meet-fred.com/" target="_blank" rel="noreferrer">See Fred</a><button class="button ghost" type="button" data-action="restart">Run the case again</button></div>'+
         '</section>';
       }
